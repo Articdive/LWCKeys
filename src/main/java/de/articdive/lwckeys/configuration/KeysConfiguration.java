@@ -23,7 +23,7 @@ public enum KeysConfiguration implements ConfigurationEnum {
             "# material - item type (please use https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)",
             "# enchantments - (List) use the input Enchantment,level e.g 'SHARPNESS,5'",
             "# timeRequirement - Amount of time required per key, (for no time don't add it at all) use the syntax: 1 year, 2 months, 1 week, 5 days, 1 hour, 8 minutes",
-            "# If you have trouble adding enchantments by name use https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html",
+            "# If you have trouble adding enchantments by name use the name ID of https://minecraft.gamepedia.com/Enchanting#IDs",
             "# permissionsRequired - Does the key require a permission (either lwckeys.use or lwckeys.use.(name)",
             "# removeProtection - Should protections be removed, or should the protection be transfered to the user?",
             "# sinceOwnerOnline - Should the unlock-time on keys be based on the player's login or the chest's last open time?"

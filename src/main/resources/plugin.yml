@@ -1,0 +1,37 @@
+name: LWCKeys
+version: ${project.version}
+main: de.articdive.lwckeys.LWCKeys
+api-version: 1.13
+prefix: LWCKeys
+depend: [LWC]
+authors: [Articdive]
+description: A plugin which adds customizable keys to the LWC plugin to unlock containers.
+website: https://www.articdive.de
+commands:
+  lwckeys:
+    description: Main command for LWCKeys.
+permissions:
+  lwckeys.*:
+    description: Gives access to all LWCKeys commands.
+    children:
+      lwckeys.give.*: true
+      lwckey.use.*: true
+  lwckeys.give.*:
+    description: Allows a player to give himself and others all LWCKeys
+    default: op
+    children:
+      lwckeys.give: true
+  lwckeys.give:
+    description: Allows a player to use the lwckeys give command.
+    default: op
+  lwckeys.use.*:
+    description: Allows a player to use all LWCKeys
+    default: true
+    children:
+      lwckeys.use: true
+  lwckeys.use:
+    description: Allows a player to use LWCKeys
+    default: true
+  lwckeys.list:
+    description: Allows a player to list all LWCKeys
+    default: op

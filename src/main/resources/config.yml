@@ -1,0 +1,14 @@
+config_version: ''
+keys:
+  silverkey:
+    displayName: '&7 Silver Key'
+    lore:
+      - '&6King George'
+    material: TRIPWIRE_HOOK
+    enchantments:
+      - 'SHARPNESS,5'
+      - 'LURE,4'
+    timeRequirement: '1 day, 2 hours, 3 minutes'
+    permissions_required: 'true'
+    sinceOwnerOnline: 'true'
+    removeProtection: 'true'

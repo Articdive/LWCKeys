@@ -102,7 +102,9 @@ public class PlayerListener implements Listener {
                 if (player.getGameMode() == GameMode.CREATIVE) {
                     return;
                 }
-                player.getInventory().remove(LWCKey.createItemStack(key, 1));
+                if (player.getInventory().getItemInMainHand().isSimilar(LWCKey.createItemStack(key, 1))) {
+                    player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                }
             } else {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.TIME_REQUIRED_MESSAGE).replace("{time}", getRequiredTime(key, lastTimeStamp))));
             }

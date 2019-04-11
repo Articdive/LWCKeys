@@ -19,8 +19,11 @@ public class LWCKey {
     private final boolean permissionRequired;
     private final boolean sinceOwnerOnline;
     private final boolean removeProtection;
-
-    public LWCKey(String name, String displayName, List<String> lore, Material material, Map<Enchantment, Integer> enchantments, Period timeRequirement, boolean permissionRequired, boolean sinceOwnerOnline, boolean removeProtection) {
+    private final boolean townyWilderness;
+    private final boolean townyClaimed;
+    private final boolean townyClaimedOwn;
+    
+    public LWCKey(String name, String displayName, List<String> lore, Material material, Map<Enchantment, Integer> enchantments, Period timeRequirement, boolean permissionRequired, boolean sinceOwnerOnline, boolean removeProtection, boolean townyWilderness, boolean townyClaimed, boolean townyClaimedOwn) {
         this.name = name;
         this.displayName = displayName;
         this.lore = lore;
@@ -30,44 +33,59 @@ public class LWCKey {
         this.permissionRequired = permissionRequired;
         this.sinceOwnerOnline = sinceOwnerOnline;
         this.removeProtection = removeProtection;
+        this.townyWilderness = townyWilderness;
+        this.townyClaimed = townyClaimed;
+        this.townyClaimedOwn = townyClaimedOwn;
     }
-
+    
     public String getName() {
         return name;
     }
-
+    
     public String getDisplayName() {
         return displayName;
     }
-
+    
     public Material getMaterial() {
         return material;
     }
-
+    
     public List<String> getLore() {
         return lore;
     }
-
+    
     public Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
-
+    
     public Period getTimeRequirement() {
         return timeRequirement;
     }
-
+    
     public boolean isSinceOwnerOnline() {
         return sinceOwnerOnline;
     }
-
+    
     public boolean isRemoveProtection() {
         return removeProtection;
     }
-
+    
     public boolean isPermissionRequired() {
         return permissionRequired;
     }
-
+    
+    public boolean isTownyWilderness() {
+        return townyWilderness;
+    }
+    
+    public boolean isTownyClaimed() {
+        return townyClaimed;
+    }
+    
+    public boolean isTownyClaimedOwn() {
+        return townyClaimedOwn;
+    }
+    
     public static ItemStack createItemStack(LWCKey lwcKey, int amount) {
         ItemStack key = new ItemStack(lwcKey.getMaterial(), amount);
         ItemMeta keyMeta = key.getItemMeta();

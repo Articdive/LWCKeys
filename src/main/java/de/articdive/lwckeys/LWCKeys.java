@@ -29,7 +29,9 @@ public final class LWCKeys extends JavaPlugin {
     private final List<LWCKey> lwcKeys = new ArrayList<>();
     private LWC lwc;
     private EnumConfiguration keysConfiguration;
-
+    private boolean townyEnabled = false;
+    
+    
     @Override
     public void onEnable() {
         if (!(this.getServer().getPluginManager().isPluginEnabled("LWC"))) {
@@ -38,7 +40,13 @@ public final class LWCKeys extends JavaPlugin {
         } else {
             Plugin lwcp = Bukkit.getPluginManager().getPlugin("LWC");
             lwc = ((LWCPlugin) lwcp).getLWC();
-            getLogger().info("Hooked into LWC version " + lwcp.getDescription().getVersion() + " successfully");
+            getLogger().info("Hooked into LWC version " + lwcp.getDescription().getVersion() + " successfully.");
+        }
+        if (this.getServer().getPluginManager().isPluginEnabled("Towny")) {
+            Plugin towny = Bukkit.getPluginManager().getPlugin("Towny");
+            String version = towny.getDescription().getVersion();
+            getLogger().info("Hooked into Towny version " + version + " successfully.");
+            townyEnabled = true;
         }
         // Copy defaults;
         saveDefaultConfig();
@@ -51,12 +59,12 @@ public final class LWCKeys extends JavaPlugin {
         getCommand("lwckeys").setExecutor(lwcKeysCommand);
         getCommand("lwckeys").setTabCompleter(lwcKeysCommand);
     }
-
+    
     @Override
     public void onDisable() {
         getLogger().info("LWCKeys has been disabled!");
     }
-
+    
     @SuppressWarnings("unchecked")
     private void loadLWCKeys() {
         ConfigurationSection outersection = keysConfiguration.getConfigurationSection(KeysConfiguration.KEYS);
@@ -70,6 +78,9 @@ public final class LWCKeys extends JavaPlugin {
             boolean requiresPermission = false;
             boolean removeProtection = true;
             boolean sinceOwnerOnline = true;
+            boolean townyWilderness = true;
+            boolean townyClaimed = true;
+            boolean townyClaimedOwn = true;
             for (String keyAttribute : innersection.getValues(false).keySet()) {
                 switch (keyAttribute.toLowerCase()) {
                     case "name":
@@ -134,7 +145,7 @@ public final class LWCKeys extends JavaPlugin {
                                 case "y":
                                 case "year":
                                 case "years": {
-                                   timeRequirement = timeRequirement.plusYears(periodAmount);
+                                    timeRequirement = timeRequirement.plusYears(periodAmount);
                                     break;
                                 }
                                 case "month":
@@ -191,21 +202,37 @@ public final class LWCKeys extends JavaPlugin {
                     case "removeprotection": {
                         removeProtection = Boolean.parseBoolean((String) innersection.get(keyAttribute));
                     }
+                    case "townywilderness":
+                    case "towny_wilderness": {
+                        townyWilderness = Boolean.parseBoolean((String) innersection.get(keyAttribute));
+                    }
+                    case "townyclaimed":
+                    case "towny_claimed": {
+                        townyClaimed = Boolean.parseBoolean((String) innersection.get(keyAttribute));
+                    }
+                    case "townyclaimedown":
+                    case "towny_claimed_own": {
+                        townyClaimedOwn = Boolean.parseBoolean((String) innersection.get(keyAttribute));
+                    }
                 }
             }
-            lwcKeys.add(new LWCKey(name.toLowerCase(), displayName, lore, material, enchantments, timeRequirement, requiresPermission, sinceOwnerOnline, removeProtection));
+            lwcKeys.add(new LWCKey(name.toLowerCase(), displayName, lore, material, enchantments, timeRequirement, requiresPermission, sinceOwnerOnline, removeProtection, townyWilderness, townyClaimed, townyClaimedOwn));
         }
     }
-
+    
     public List<LWCKey> getLwcKeys() {
         return lwcKeys;
     }
-
+    
     public LWC getLWC() {
         return lwc;
     }
-
+    
     public EnumConfiguration getKeysConfiguration() {
         return keysConfiguration;
+    }
+    
+    public boolean isTownyEnabled() {
+        return townyEnabled;
     }
 }

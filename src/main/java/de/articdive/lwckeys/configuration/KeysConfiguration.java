@@ -15,6 +15,8 @@ public enum KeysConfiguration implements ConfigurationEnum {
     SPECIFY_PLAYER_MESSAGE("specify_player_message", "&cYou need to specify a player to give the key to", "# Message when console tries to give a key without specifying a player."),
     PLAYER_NOT_FOUND_MESSAGE("player_not_found_message", "&cPlayer {input} couldn't be found or is not online!", "# When a player-name which can't be found is inputted."),
     NOT_A_VALID_INTEGER_MESSAGE("not_a_valid_integer_message", "&c{input} is not a valid integer.", "# When a number is not an integer or not readable."),
+    TOWNY_NO_PERMISSION("towny_no_permission_message", "&cYou don't have permission to use this key in this towny region!", "# Message for the player if it has no permission to use a key in the towny region"),
+    GIVE_KEY_MESSAGE("give_key_message", "&aYou have given {player}, {amount} of the key: {keyname}."),
     KEYS("keys", "",
             "# You can add keys here.",
             "# The name of the key is the header of the config section.",
@@ -26,7 +28,10 @@ public enum KeysConfiguration implements ConfigurationEnum {
             "# If you have trouble adding enchantments by name use the name ID of https://minecraft.gamepedia.com/Enchanting#IDs",
             "# permissionsRequired - Does the key require a permission (either lwckeys.use or lwckeys.use.(name)",
             "# removeProtection - Should protections be removed, or should the protection be transfered to the user?",
-            "# sinceOwnerOnline - Should the unlock-time on keys be based on the player's login or the chest's last open time?"
+            "# sinceOwnerOnline - Should the unlock-time on keys be based on the player's login or the chest's last open time?",
+            "# townyWilderness - Should the key unlock protections in the towny wilderness.",
+            "# townyClaimed - Should the key unlock in ANY towny claimed protection.",
+            "# townyClaimedOwn - Should the key unlock towny claimed protection that the player is a part of (resident of a town)"
     );
 
 

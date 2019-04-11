@@ -14,11 +14,12 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class LWCKeysCommand implements CommandExecutor, TabExecutor {
     private LWCKeys lwcKeysMain = LWCKeys.getPlugin(LWCKeys.class);
     private EnumConfiguration keysConfiguration = lwcKeysMain.getKeysConfiguration();
-
+    
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("lwckeys")) {
@@ -67,6 +68,10 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
                                 if (sender.hasPermission("lwckeys.give.*") || sender.hasPermission("lwckeys.give." + lwcKey.getName())) {
                                     if (sender instanceof Player) {
                                         Player player = (Player) sender;
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.GIVE_KEY_MESSAGE)
+                                                .replaceAll(Pattern.quote("{player}"), "yourself")
+                                                .replaceAll(Pattern.quote("{amount}"), "1")
+                                                .replaceAll(Pattern.quote("{keyname}"), lwcKey.getName())));
                                         player.getInventory().addItem(LWCKey.createItemStack(lwcKey, 1));
                                         return true;
                                     } else {
@@ -79,7 +84,7 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
                                 }
                             }
                         }
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.SPECIFY_VALID_KEY_MESSAGE).replace("{input}", args[1])));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.SPECIFY_VALID_KEY_MESSAGE).replaceAll(Pattern.quote("{input}"), args[1])));
                         return true;
                     } else {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.NO_PERMISSION_CMD_MESSAGE)));
@@ -101,7 +106,7 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
                                 if (sender.hasPermission("lwckeys.give.*") || sender.hasPermission("lwckeys.give." + lwcKey.getName())) {
                                     Player receiver = Bukkit.getPlayer(args[2]);
                                     if (receiver == null) {
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.PLAYER_NOT_FOUND_MESSAGE)).replace("{input}", args[2]));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.PLAYER_NOT_FOUND_MESSAGE)).replaceAll(Pattern.quote("{input}"), args[2]));
                                         return true;
                                     }
                                     int amount = 1;
@@ -109,11 +114,15 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
                                         try {
                                             amount = Integer.parseInt(args[3]);
                                         } catch (NumberFormatException nfe) {
-                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.NOT_A_VALID_INTEGER_MESSAGE)).replace("{input}", args[3]));
+                                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.NOT_A_VALID_INTEGER_MESSAGE)).replaceAll(Pattern.quote("{input}"), args[3]));
                                             return true;
                                         }
                                     }
                                     receiver.getInventory().addItem(LWCKey.createItemStack(lwcKey, amount));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.GIVE_KEY_MESSAGE)
+                                            .replaceAll(Pattern.quote("{player}"), receiver.getName())
+                                            .replaceAll(Pattern.quote("{amount}"), Integer.toString(amount))
+                                            .replaceAll(Pattern.quote("{keyname}"), lwcKey.getName())));
                                     return true;
                                 } else {
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.NO_PERMISSION_CMD_MESSAGE)));
@@ -121,7 +130,7 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
                                 }
                             }
                         }
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.SPECIFY_VALID_KEY_MESSAGE)));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.SPECIFY_VALID_KEY_MESSAGE).replaceAll(Pattern.quote("{input}"), args[1])));
                         return true;
                     } else {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', keysConfiguration.getString(KeysConfiguration.NO_PERMISSION_CMD_MESSAGE)));
@@ -140,7 +149,7 @@ public class LWCKeysCommand implements CommandExecutor, TabExecutor {
             return true;
         }
     }
-
+    
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return null;

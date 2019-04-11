@@ -4,6 +4,7 @@ main: de.articdive.lwckeys.LWCKeys
 api-version: 1.13
 prefix: LWCKeys
 depend: [LWC]
+softdepend: [Towny]
 authors: [Articdive]
 description: A plugin which adds customizable keys to the LWC plugin to unlock containers.
 website: https://www.articdive.de
